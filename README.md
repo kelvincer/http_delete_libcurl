@@ -1,4 +1,4 @@
-# Code 2
+## Code 2
 ```c
 #include "curl/curl.h"
 
