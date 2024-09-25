@@ -1,5 +1,5 @@
 title: Http DELETE Request With Libcurl
-theme: jekyll-theme-minimal
+theme: jekyll-theme-slate
 highlighter: rouge
 kramdown:
     input: GFM
