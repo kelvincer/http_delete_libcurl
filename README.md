@@ -1,4 +1,5 @@
-## Code 2
+## Code
+This is how to make a DELETE request using libcurl library using the C programming language. I am using [TMDB](https://developer.themoviedb.org/reference/intro/getting-started) api to make this demo.
 ```c
 #include "curl/curl.h"
 
@@ -21,7 +22,7 @@ int main(void)
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "accept: application/json");
         headers = curl_slist_append(headers, "Content-Type: application/json;charset=utf-8");
-        headers = curl_slist_append(headers, "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDM1MTgzZmM4ZTgyOTQ3OGNiNWY4NTM5ZWZkMWU3MSIsIm5iZiI6MTcyNzAyODk1My45NTM4NzUsInN1YiI6IjVjNjA0NjE1OTI1MTQxMzM3NmMwMWQ3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ojN56CsCIKIhTfNlXob_o48Npl3xBiznLJls-jrNMRY");
+        headers = curl_slist_append(headers, "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDM1MTgzZmM4ZTgyOTQ3OGNiNWY4NTM5ZWZkMWU3MSIsIm5iZiI6MTcyNzAyODk1My45NTM4NzUsInN1YiI6IjVjNjA0NjE1OTI1MTQxMzM3NmMwMWQ3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ojN56CsCIKIhTfNlXob_o48Npl3xBiznLJls-..."); // This is not the complete key
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
         CURLcode ret = curl_easy_perform(curl);
@@ -34,4 +35,42 @@ int main(void)
 
     return 0;
 }
+```
+##Console output
+Here is the output of the previous code, running on macOS.
+```console
+MacBook-Pro-de-kelvin:libcurl kelvinc$ cc delete.c -o o -lcurl
+MacBook-Pro-de-kelvin:libcurl kelvinc$ ./o
+{"success":true,"status_code":13,"status_message":"The item/record was deleted successfully."}
+```
+This is the output using leaks tool in macOS to check memory leaks.
+```console
+MacBook-Pro-de-kelvin:libcurl kelvinc$ leaks --atExit --list  -- ./o
+o(19384) MallocStackLogging: could not tag MSL-related memory as no_footprint, so those pages will be included in process footprint - (null)
+o(19384) MallocStackLogging: recording malloc and VM allocation stacks using lite mode
+{"success":true,"status_code":13,"status_message":"The item/record was deleted successfully."}
+Process:         o [19384]
+Path:            /Users/USER/*/o
+Load Address:    0x1000ae000
+Identifier:      o
+Version:         0
+Code Type:       X86-64
+Platform:        macOS
+Parent Process:  leaks [19383]
+
+Date/Time:       2024-09-25 15:49:09.019 -0500
+Launch Time:     2024-09-25 15:49:07.807 -0500
+OS Version:      macOS 14.6.1 (23G93)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 15.4 (15F31d)
+
+Physical footprint:         4340K
+Physical footprint (peak):  4340K
+Idle exit:                  untracked
+----
+
+leaks Report Version: 3.0
+Process 19384: 3026 nodes malloced for 206 KB
+Process 19384: 0 leaks for 0 total leaked bytes.
 ```
