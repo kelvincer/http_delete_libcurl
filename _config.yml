@@ -1,7 +1,6 @@
 title: Blog
 theme: jekyll-theme-dinky
-title: Http POST Request With Libcurl
-#markdown: kramdown
+title: Http DELETE Request With Libcurl
 highlighter: rouge
 kramdown:
     input: GFM
