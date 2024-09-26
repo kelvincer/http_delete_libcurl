@@ -36,7 +36,7 @@ int main(void)
     return 0;
 }
 ```
-##Console output
+## Console output
 Here is the output of the previous code, running on macOS.
 ```console
 MacBook-Pro-de-kelvin:libcurl kelvinc$ cc delete.c -o o -lcurl
