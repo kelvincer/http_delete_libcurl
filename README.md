@@ -6,7 +6,7 @@ This is how to make a DELETE request using libcurl library using the C programmi
 int main(void)
 {
     int movieId = 142064;
-    char *fullURL;
+    char fullURL[200];
     char *URL = "https://api.themoviedb.org/3/movie/%d/rating";
     sprintf(fullURL, URL, movieId);
 
@@ -22,7 +22,7 @@ int main(void)
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "accept: application/json");
         headers = curl_slist_append(headers, "Content-Type: application/json;charset=utf-8");
-        headers = curl_slist_append(headers, "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDM1MTgzZmM4ZTgyOTQ3OGNiNWY4NTM5ZWZkMWU3MSIsIm5iZiI6MTcyNzAyODk1My45NTM4NzUsInN1YiI6IjVjNjA0NjE1OTI1MTQxMzM3NmMwMWQ3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ojN56CsCIKIhTfNlXob_o48Npl3xBiznLJls-..."); // This is not the complete key
+        headers = curl_slist_append(headers, "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDM1MTgzZmM4ZTgyOTQ3OGNiNWY4NTM5ZWZkMWU3MSIsIm5iZiI6MTcyNzAyODk1My45NTM4NzUsInN1YiI6IjVjNjA0NjE1OTI1MTQxMzM3NmMwMWQ3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ojN56CsCIKIhTfNlXob_o48Npl3x......"); // This is not the complete key
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
         CURLcode ret = curl_easy_perform(curl);
@@ -45,32 +45,32 @@ MacBook-Pro-de-kelvin:libcurl kelvinc$ ./o
 ```
 This is the output using leaks tool in macOS to check memory leaks.
 ```console
-MacBook-Pro-de-kelvin:libcurl kelvinc$ leaks --atExit --list  -- ./o
-o(19384) MallocStackLogging: could not tag MSL-related memory as no_footprint, so those pages will be included in process footprint - (null)
-o(19384) MallocStackLogging: recording malloc and VM allocation stacks using lite mode
+Pro-de-kelvin:libcurl kelvinc$ leaks --atExit --list  -- ./o
+o(11524) MallocStackLogging: could not tag MSL-related memory as no_footprint, so those pages will be included in process footprint - (null)
+o(11524) MallocStackLogging: recording malloc (and VM allocation) stacks using lite mode
 {"success":true,"status_code":13,"status_message":"The item/record was deleted successfully."}
-Process:         o [19384]
+Process:         o [11524]
 Path:            /Users/USER/*/o
-Load Address:    0x1000ae000
+Load Address:    0x10ece1000
 Identifier:      o
 Version:         0
 Code Type:       X86-64
 Platform:        macOS
-Parent Process:  leaks [19383]
+Parent Process:  leaks [11523]
 
-Date/Time:       2024-09-25 15:49:09.019 -0500
-Launch Time:     2024-09-25 15:49:07.807 -0500
-OS Version:      macOS 14.6.1 (23G93)
+Date/Time:       2024-09-29 14:39:45.384 -0500
+Launch Time:     2024-09-29 14:39:44.064 -0500
+OS Version:      macOS 15.0 (24A335)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
-Analysis Tool Version:  Xcode 15.4 (15F31d)
+Analysis Tool Version:  Xcode 16.0 (16A242d)
 
-Physical footprint:         4340K
-Physical footprint (peak):  4340K
+Physical footprint:         3724K
+Physical footprint (peak):  3724K
 Idle exit:                  untracked
 ----
 
 leaks Report Version: 3.0
-Process 19384: 3026 nodes malloced for 206 KB
-Process 19384: 0 leaks for 0 total leaked bytes.
+Process 11524: 3262 nodes malloced for 229 KB
+Process 11524: 0 leaks for 0 total leaked bytes.
 ```
